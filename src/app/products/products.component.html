@@ -84,7 +84,7 @@
           >
             Cerrar
           </button>
-          <button type="button" class="btn btn-primary" (click)="addProducts()">Guardar Producto
+          <button type="button" class="btn btn-primary" (click)="addProducts()" data-bs-dismiss="modal">Guardar Producto
           </button>
         </div>
       </div>
@@ -115,7 +115,7 @@
       id="btnradio2"
       autocomplete="off"
     />
-    <label class="btn btn-outline-primary" for="btnradio2">Salidos</label>
+    <label class="btn btn-outline-primary" for="btnradio2">Fuera del inventario</label>
 
     <input
       (click)="onFilterChage(3)"
