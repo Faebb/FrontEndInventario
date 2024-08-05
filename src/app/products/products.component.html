@@ -1,0 +1,183 @@
+<!-- products.component.html -->
+
+<div class="container-fluid my-5 row row-cols-sm-1 row-cols-lg-3">
+  <!--Crear nuevos productos-->
+  <div class="d-flex justify-content-center justify-content-lg-start col py-3">
+    <button
+      type="button"
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Nuevos Productos
+    </button>
+  </div>
+  <!-- Modal para crear nuevos productos -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Agregar Productos
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- Formulario para agregar productos -->
+          <form [formGroup]="formProduct">
+                  <div class="col-md-4">
+                    <label for="typeelaboration" class="form-label"
+                    >Tipo de elaboración:</label
+                  >
+                  <select
+                    id="typeelaboration"
+                    class="form-select"
+                    aria-label="typeelaboration"
+                    formControlName="elaborationType"
+                  >
+                    <option selected>Selecione...</option>
+                    <option value="false">Elaborado a mano</option>
+                    <option value="true">Elaborado a mano y máquina</option>
+                  </select>
+                  </div>
+                 
+                  <div class="col-md-4">
+                    <label for="nombreproducto" class="form-label">Nobre:</label>
+                    <input type="text" class="form-control" id="nombreproducto"
+                    formControlName="productName">
+                  </div>
+
+                  <div class="col-md-4">
+                    <label for="estadoproducto" class="form-label"
+                    >Estado:</label
+                  >
+                  <select
+                    id="estadoproducto"
+                    class="form-select"
+                    aria-label="estadoproducto"
+                    formControlName="productStateId"
+                  >
+                    <option selected>Selecione...</option>
+                    <option value="1">Disponible</option>
+                    <option value="2">Fuera de inventario</option>
+                    <option value="3">Defectuoso</option>
+                  </select>
+                  </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cerrar
+          </button>
+          <button type="button" class="btn btn-primary" (click)="addProducts()">Guardar Producto
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Filtros de estado-->
+  <div
+    class="d-flex justify-content-center btn-group col p-3"
+    role="group"
+    aria-label="Basic radio toggle button group"
+  >
+    <input
+      (click)="onFilterChage(1)"
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio1"
+      autocomplete="off"
+      checked
+    />
+    <label class="btn btn-outline-primary" for="btnradio1">Disponibles</label>
+
+    <input
+      (click)="onFilterChage(2)"
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio2"
+      autocomplete="off"
+    />
+    <label class="btn btn-outline-primary" for="btnradio2">Salidos</label>
+
+    <input
+      (click)="onFilterChage(3)"
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio3"
+      autocomplete="off"
+    />
+    <label class="btn btn-outline-primary" for="btnradio3">Defectuosos</label>
+  </div>
+  <!--Botón mostrar todo-->
+  <div class="d-flex justify-content-center justify-content-lg-end col p-3">
+    <button class="btn btn-secondary" (click)="getAllProducts()">
+      Mostrar Todos
+    </button>
+  </div>
+</div>
+
+<div class="table-resposive overflow-auto mx-auto" style="max-width: 1200px">
+  <table class="table text-center align-middle">
+    <thead>
+      <tr>
+        <th scope="col">ID del producto</th>
+        <th scope="col">Tipo de elaboración</th>
+        <th scope="col">Nombre del producto</th>
+        <th scope="col">Estado del producto</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <!-- Aquí iteras sobre tus productos y muestras los datos -->
+      <tr *ngFor="let producto of listaProductos">
+        <td scope="col">{{ producto.productId }}</td>
+        <td>
+          {{
+            producto.elaborationType
+              ? "Elaborado a mano y máquina"
+              : "Elaborado a mano"
+          }}
+        </td>
+
+        <td>{{ producto.productName }}</td>
+        <td>{{ producto.productState.name }}</td>
+        <td>
+          <div class="justify-content-center">
+            <button class="btn btn-primary m-1">Ver</button>
+            <button
+              class="btn btn-success m-1"
+              (click)="ChangeStateProduct(producto.productId, 2)"
+            >
+              Salir
+            </button>
+            <button
+              class="btn btn-danger m-1"
+              (click)="ChangeStateProduct(producto.productId, 3)"
+            >
+              Defectuoso
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
